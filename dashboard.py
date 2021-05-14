@@ -11,17 +11,23 @@ import logging
 #from dashboardDB import *
 
 
-db = DashboardDB()
+#db = DashboardDB()
 
-app = Flask(__name__)
+app = Flask(__name__) 
 
-            
-def open_browser():
-    webbrowser.open_new('http://127.0.0.1:2000/')
+
+@app.route("/") 
+def home(): 
+    return render_template('index.html', year='2000')
+
+
+'''def open_browser():
+    webbrowser.open_new('http://127.0.0.1:2000/')'''
 
 def run_app():
-    Timer(1, open_browser).start();
+    app.run(debug = True)     
+    """Timer(1, open_browser).start();
     app.logger.setLevel(logging.DEBUG)
     app.jinja_env.auto_reload = True
     app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.run(port=2000)
+    app.run(port=2000)"""
