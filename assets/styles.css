@@ -8,12 +8,15 @@ body {
     -webkit-font-smoothing: antialiased;
     background: #f0f0f0;
     color: #50595E;
-    font-family: 'Raleway';
+    /*font-family: 'Raleway';*/
+}
+#react-entry-point {
+      height: 100%;
 }
 .main {
       height: 100%;
       width: 100%;
-      max-width: 90%;
+      max-width: 95%;
       max-height: 90%;
       padding-right: 15px;
       padding-left: 15px;
@@ -23,23 +26,27 @@ body {
 }
 
 .main-row {
-    margin: 25px 10px 25px 10px;
+    margin: 15px 10px 15px 10px;
+}
+.col-12{
+	padding-bottom : 20px;
+}
+
+.card {
+    font-size: 12px;
 }
 
 .card-header {
     font-weight: 500;
+	background-color: white;
+	border-bottom: 1px solid rgb(0 0 0 / 5%)
 }
-      /*  position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 30px 20px;
-        background: #fcfcfc;
-        text-align: center;
-        box-shadow: 0 1px 10px #a7a7a7, inset 0 1px 0 #fff;
-      }*/
-#oMonImage {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
+#csv-button {
+	color:#17a2b8;
+	float:right;
 }
+/*.text-secondary {
+    overflow: auto;
+    max-height: 500px;
+}*/
+
