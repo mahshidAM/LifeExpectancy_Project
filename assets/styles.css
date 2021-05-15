@@ -18,15 +18,15 @@ body {
       width: 100%;
       max-width: 95%;
       max-height: 90%;
-      padding-right: 15px;
-      padding-left: 15px;
+      /*padding-right: 15px;
+      padding-left: 15px;*/
       margin-right: auto;
       margin-left: auto;
       /*background-color: #7f8284;*/
 }
 
 .main-row {
-    margin: 15px 10px 15px 10px;
+    margin: 15px 0px 15px 0px;
 }
 .col-12{
 	padding-bottom : 20px;

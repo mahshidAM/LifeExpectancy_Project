@@ -52,7 +52,7 @@ app = dash.Dash(__name__,
 app.layout = html.Div(className='container main', children=[
                                html.Div(className='row main-row',  # Define the row element
                                        children=[
-                                          html.Div(className='col-6',
+                                          html.Div(className='col-4',
                                                    children= [
                                                      html.Article(className='card', 
                                                                  children= [
@@ -68,13 +68,13 @@ app.layout = html.Div(className='container main', children=[
                                                                              )
                                                                          ])
                                                    ]),  # Define the left element(table)
-                                          html.Div(className='col-6',
+                                          html.Div(className='col-8',
                                                    children= [
                                                      html.Article(className='card', 
                                                                  children= [
-                                                                     html.Div(className='card-header',
-                                                                             children=html.H2('Map')
-                                                                             ),
+                                                                     #html.Div(className='card-header',
+                                                                     #        children=html.H2('Map')
+                                                                     #        ),
                                                                      html.Div(className='card-body text-secondary',
                                                                              children=                                                                                                                                   dcc.Graph(
                                                                                       id='map',
