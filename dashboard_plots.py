@@ -39,6 +39,14 @@ conv_dict = {
     'Yemen': 'Yemen, Rep.'
 }
 
+def get_groupedYearData(country,df):
+    """
+    Returns dataframe filtered by country and grouped by year (for lineCharts)
+    Inputs - country=country, dataframe=data
+    """
+    grouped_df = df[df['country'] == country].groupby('year')['value'].sum().reset_index()
+    return grouped_df
+
 def get_countries_geo(df):
     import json
     world_path = 'data/data.geo.json'
@@ -83,9 +91,6 @@ def get_countries_geo(df):
         else:
             missing.append(country_name)
 
-    # Displaying metrics
-    #print(f'Countries found    : {len(found)}')
-    #print(f'Countries not found: {len(missing)}')
     geo_world_ok = {'type': 'FeatureCollection', 'features': countries_geo}
     return geo_world_ok
 
@@ -106,7 +111,7 @@ def generate_table(df):
         style_data={
             'whiteSpace': 'normal',
             'height': 'auto',
-            'lineHeight': '15px'
+            'lineHeight': '14px'
         },
         data=df.to_dict('records'),
         sort_action="native",
@@ -118,13 +123,13 @@ def create_map(df):
     df1 = df.query("year == 2007")
     
     fig = px.choropleth(df,               
-              height=630,
+              height=600,
               geojson=get_countries_geo(df), 
               locations='country',
               color=df['value'],
               hover_name="country",  
               animation_frame="year",    
-              color_continuous_scale='Inferno'            
+              color_continuous_scale='Viridis'            
     )
 
     '''
@@ -133,6 +138,62 @@ def create_map(df):
     )'''
     return fig
 
+def create_lineChart(df, selected):
+
+    print(selected)
+    # Create figure
+    fig = go.Figure()
+
+    for name in selected:
+        data = get_groupedYearData(name,df)
+        fig.add_trace(go.Scatter(x=data['year'], y=data['value'],
+                    mode='lines',
+                    name=name))
+    # Set title
+    fig.update_layout(
+        title_text="Life Expectancy "+str(df.year.min()) + " to " + str(df.year.max()),
+        xaxis=dict(
+            gridcolor='rgb(243, 243, 243)',
+            type='linear',
+            gridwidth=2,
+        ),
+        yaxis=dict(
+        
+        gridcolor='rgb(243, 243, 243)',
+        gridwidth=2,
+        ),
+        paper_bgcolor='white',
+        plot_bgcolor='white',
+        height=700
+    )
+    # Add range slider
+    fig.update_layout(
+        xaxis=dict(
+            rangeselector=dict(
+                buttons=list([
+                    dict(count=1,
+                         label="1year",
+                         step="year",
+                         stepmode="backward"),
+                    dict(step="all")
+                ])
+            ),
+            rangeslider=dict(
+                visible=True
+            ),
+            type="date"
+        )
+    )
+    # style all the traces
+    fig.update_traces(
+        hoverinfo="name+x+y",
+        line={"width": 1.5},
+        marker={"size": 6},
+        mode="lines+markers"
+    )
+    
+    return fig
+    
 def create_chart():
     df = pd.DataFrame({
         "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],

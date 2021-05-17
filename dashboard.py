@@ -1,11 +1,11 @@
 """Interactive dash/plotly dashboard"""
 import pandas as pd
-import dash
+'''import dash
 import dash_html_components as html
 import dash_core_components as dcc
-import dash_bootstrap_components as dbc
+import dash_bootstrap_components as dbc'''
 from dash.dependencies import Output, Input
-from dashboard_plots import *
+from dashboard_layouts import *
 import flask
 from flask import send_file, make_response, Response
 from io import *
@@ -25,6 +25,7 @@ external_scripts = [
 # external CSS stylesheets
 external_stylesheets = [
     'https://codepen.io/chriddyp/pen/bWLwgP.css',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
     {
         'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
         'rel': 'stylesheet',
@@ -36,73 +37,36 @@ external_stylesheets = [
         'rel': 'stylesheet',
         'integrity': 'sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf',
         'crossorigin': 'anonymous'
-    },
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
+    }
 ]
 
-graph = create_chart()
-
 df = pd.read_csv('data/API_SP_clean.csv', sep=',', encoding='utf8', engine='python')
-map_graph = create_map(df)
+
 
 app = dash.Dash(__name__,
                 external_scripts=external_scripts,
                 external_stylesheets=external_stylesheets)
 
 app.layout = html.Div(className='container main', children=[
+                               set_header(), #dashboard header
                                html.Div(className='row main-row',  # Define the row element
                                        children=[
-                                          html.Div(className='col-4',
-                                                   children= [
-                                                     html.Article(className='card', 
-                                                                 children= [
-                                                                     html.Div(className='card-header',
-                                                                             children=[ 
-                                                                                 html.H2('Life Expectancy'),
-                                                                                 html.P(children=html.A(id='csv-button', n_clicks=0, className='fas fa-file-csv fa-2x download', href="/urlToDownload/") 
-                                                                                       )]                                                 
-                                                                                                
-                                                                             ),
-                                                                     html.Div(className='card-body text-secondary',
-                                                                              children=generate_table(df)
-                                                                             )
-                                                                         ])
-                                                   ]),  # Define the left element(table)
-                                          html.Div(className='col-8',
-                                                   children= [
-                                                     html.Article(className='card', 
-                                                                 children= [
-                                                                     #html.Div(className='card-header',
-                                                                     #        children=html.H2('Map')
-                                                                     #        ),
-                                                                     html.Div(className='card-body text-secondary',
-                                                                             children=                                                                                                                                   dcc.Graph(
-                                                                                      id='map',
-                                                                                      figure=map_graph)
-                                                                             )]
-                                                                 )]
-                                                  )  # Define the right element(map)
-                                      ]),
+                                          set_tableDiv(df),  # Define the left element(table)
+                                          set_mapDiv(df)  # Define the right element(map)
+                                        ]),
                                 html.Div(className='row main-row',  # Define the row element
-                                       children=[
-                                          html.Div(className='col-12',
-                                                   children= [
-                                                     html.Article(className='card', 
-                                                                 children= [
-                                                                     html.Div(className='card-header',
-                                                                             children=html.H2('Chart')
-                                                                             ),
-                                                                     html.Div(className='card-body text-secondary',
-                                                                               children=                                                                                                                                   dcc.Graph(
-                                                                                      id='example-graph',
-                                                                                      figure=graph)
-                                                                             )]
-                                                                 )]
-                                                  ),  # Define the bottom element(chart)
-                                         
-                                      ])
+                                          children = set_chartDiv(df)  # Define the bottom element(chart)
+                                        )
 
                             ])
+
+@app.callback(Output('line-chart', 'figure'),[Input('countries-dropdown', 'value')])
+def update_graph(selected_country):
+    #print(selected_country)
+    #if type(selected_country) == 'str':
+        #return [{'label': i, 'value': i} for i in df.country.unique()]
+    #    print(selected_country)
+    return create_lineChart(df,selected_country)
 
 @app.server.route('/urlToDownload/') 
 def download_csv():
