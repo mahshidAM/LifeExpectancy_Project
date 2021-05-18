@@ -4,7 +4,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 from dash.dependencies import Output, Input
-from dash_plot import *
+from app_plot import *
 
 
 def set_header():
@@ -17,9 +17,10 @@ def set_header():
                         children="Life Expectancy", className="header-title"
                     ),
                     html.P(
-                        children="Analyze the behavior of avocado prices"
-                        " and the number of avocados sold in the US"
-                        " between 2015 and 2018",
+                        children=["Life expectancy (at birth) indicates the number of years a newborn infant would live if prevailing patterns of mortality at the time of its birth were to stay the same throughout its life."
+                        " The data is published by the ",
+                                  html.A('THE WORD BANK', target='_blank', href='https://data.worldbank.org/indicator/SP.DYN.LE00.IN?end=2019&most_recent_year_desc=false&start=1960&view=map&year=2019')
+                                ],
                         className="header-description",
                     ),
                 ],

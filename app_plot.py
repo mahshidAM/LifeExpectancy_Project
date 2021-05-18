@@ -5,7 +5,7 @@ import dash_table
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
-from dash_data import *
+from app_data import *
 
 
 def get_groupedYearData(country,df):
@@ -89,20 +89,12 @@ def create_lineChart(df, selected):
             ),
             paper_bgcolor='white',
             plot_bgcolor='white',
-            height=700
+            height=700,
+            hovermode='x unified'
         )
     # Add range slider
     fig.update_layout(
         xaxis=dict(
-            rangeselector=dict(
-                buttons=list([
-                    dict(count=1,
-                         label="1year",
-                         step="year",
-                         stepmode="backward"),
-                    dict(step="all")
-                ])
-            ),
             rangeslider=dict(
                 visible=True
             ),
@@ -111,7 +103,6 @@ def create_lineChart(df, selected):
     )
     # style all the traces
     fig.update_traces(
-        hoverinfo="name+x+y",
         line={"width": 1.5},
         marker={"size": 6},
         mode="lines+markers"
