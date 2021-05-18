@@ -1,20 +1,15 @@
-"""Interactive dash/plotly dashboard"""
-import pandas as pd
-'''import dash
-import dash_html_components as html
-import dash_core_components as dcc
-import dash_bootstrap_components as dbc'''
+"""Interactive Dashboard dash/plotly"""
 from dash.dependencies import Output, Input
-from dashboard_layouts import *
+
 import flask
 from flask import send_file, make_response, Response
 from io import *
 
+from dashboard_layouts import *
+from dash_data import *
 
 # external JavaScript files
 external_scripts = [
-    'https://www.google-analytics.com/analytics.js',
-    {'src': 'https://cdn.polyfill.io/v2/polyfill.min.js'},
     {
         'src': 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.core.js',
         'integrity': 'sha256-Qqd/EfdABZUcAxjOkMi8eGEivtdTkh3b65xCZL4qAQA=',
@@ -40,8 +35,7 @@ external_stylesheets = [
     }
 ]
 
-df = pd.read_csv('data/API_SP_clean.csv', sep=',', encoding='utf8', engine='python')
-
+df = get_DataFrame() #load and clean data
 
 app = dash.Dash(__name__,
                 external_scripts=external_scripts,
@@ -55,17 +49,13 @@ app.layout = html.Div(className='container main', children=[
                                           set_mapDiv(df)  # Define the right element(map)
                                         ]),
                                 html.Div(className='row main-row',  # Define the row element
-                                          children = set_chartDiv(df)  # Define the bottom element(chart)
+                                          children = set_chartDiv(df)  # Define the bottom element(line chart)
                                         )
 
                             ])
 
 @app.callback(Output('line-chart', 'figure'),[Input('countries-dropdown', 'value')])
 def update_graph(selected_country):
-    #print(selected_country)
-    #if type(selected_country) == 'str':
-        #return [{'label': i, 'value': i} for i in df.country.unique()]
-    #    print(selected_country)
     return create_lineChart(df,selected_country)
 
 @app.server.route('/urlToDownload/') 
