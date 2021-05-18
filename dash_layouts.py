@@ -4,7 +4,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 from dash.dependencies import Output, Input
-from dash_plots import *
+from app_plots import *
 
 
 def set_header():

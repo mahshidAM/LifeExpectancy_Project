@@ -5,8 +5,8 @@ import flask
 from flask import send_file, make_response, Response
 from io import *
 
-from dashboard_layouts import *
-from dash_data import *
+from app_layouts import *
+from app_data import *
 
 # external JavaScript files
 external_scripts = [
