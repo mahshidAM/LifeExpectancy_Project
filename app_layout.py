@@ -8,6 +8,9 @@ from dash_plot import *
 
 
 def set_header():
+    """
+    Returns header layout   
+    """
     return html.Div(className="header",
                 children=[
                     html.H1(
@@ -24,6 +27,10 @@ def set_header():
         )
 
 def set_tableDiv(df):
+    """
+    Returns table layout   
+    Inputs - dataframe=df
+    """
     return html.Div(className='col-4 lifeExptable',
        children= [
          html.Article(className='card',children= [
@@ -37,6 +44,10 @@ def set_tableDiv(df):
            ])
 
 def set_mapDiv(df):
+    """
+    Returns map layout  
+    Inputs - dataframe=df
+    """
     return html.Div(className='col-8',
                         children= html.Div(                                                                                                                    dcc.Graph(
                                   id='map',
@@ -45,6 +56,10 @@ def set_mapDiv(df):
                              ))
 
 def set_chartDiv(df):
+    """
+    Returns lineChart layout   
+    Inputs - dataframe=df
+    """
     countries = df.country.unique()
     return html.Div(className='col-12',
                    children= [
