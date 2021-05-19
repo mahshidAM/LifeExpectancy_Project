@@ -56,9 +56,9 @@ def create_map(df):
               color=df['value'],
               hover_name="country",  
               animation_frame="year",    
-              color_continuous_scale='Viridis'            
+              color_continuous_scale='Viridis'
     )
-
+    
     return fig
 
 def create_lineChart(df, selected):

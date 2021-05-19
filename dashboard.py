@@ -43,12 +43,12 @@ app = dash.Dash(__name__,
 
 app.layout = html.Div(className='container main', children=[
                                set_header(), #dashboard header
-                               html.Div(className='row main-row',  # Define the row element
+                               dbc.Row(className='main-row',  # Define the row element
                                        children=[
                                           set_tableDiv(df),  # Define the left element(table)
                                           set_mapDiv(df)  # Define the right element(map)
                                         ]),
-                                html.Div(className='row main-row',  # Define the row element
+                                dbc.Row(className='main-row',  # Define the row element
                                           children = set_chartDiv(df)  # Define the bottom element(line chart)
                                         )
 

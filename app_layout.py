@@ -32,13 +32,13 @@ def set_tableDiv(df):
     Returns table layout   
     Inputs - dataframe=df
     """
-    return html.Div(className='col-4 lifeExptable',
+    return dbc.Col(className='lifeExptable', width=4,
        children= [
-         html.Article(className='card',children= [
-                         html.Div(className='card-header',
+         dbc.Card(children= [
+                         dbc.CardHeader(
                                      children= html.A(id='csv-button', n_clicks=0, className='fas fa-file-csv fa-2x download', href="/urlToDownload/")                                                 
                                  ),
-                         html.Div(className='card-body text-secondary',
+                         dbc.CardBody(className='text-secondary',
                                   children=generate_table(df)
                                  )
                  ])
@@ -48,13 +48,13 @@ def set_mapDiv(df):
     """
     Returns map layout  
     Inputs - dataframe=df
-    """
-    return html.Div(className='col-8',
-                        children= html.Div(                                                                                                                    dcc.Graph(
-                                  id='map',
-                                  figure=create_map(df)
-                                             )
-                             ))
+    """   
+    return dbc.Col(width=8, children= dcc.Graph(                                                                                           
+                                   id='map',
+                                   figure=create_map(df),
+                                  config = dict({'scrollZoom': False})
+                              )
+                    )
 
 def set_chartDiv(df):
     """
@@ -62,7 +62,7 @@ def set_chartDiv(df):
     Inputs - dataframe=df
     """
     countries = df.country.unique()
-    return html.Div(className='col-12',
+    return dbc.Col(width=12,
                    children= [
                      html.Article(className='card', 
                                  children= [
