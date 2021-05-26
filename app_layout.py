@@ -34,7 +34,7 @@ def set_tableDiv(df):
     """
     return dbc.Col(className='lifeExptable', width=4,
        children= [
-         dbc.Card(children= [
+         dbc.Card(className='lifeExptable', children= [
                          dbc.CardHeader(
                                      children= html.A(id='csv-button', n_clicks=0, className='fas fa-file-csv fa-2x download', href="/urlToDownload/")                                                 
                                  ),

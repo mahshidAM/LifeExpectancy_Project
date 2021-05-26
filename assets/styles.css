@@ -16,7 +16,7 @@ body {
 }
 
 .header {
-    background-color: #343a40;
+    background-color: #495057;
     height: 150px;
     padding: 16px 0 0 0;
 }
@@ -69,7 +69,7 @@ body {
 }
 
 .lifeExptable {
-	height:580px;
+	height:600px;
 }
 
 #react-entry-point {
@@ -85,6 +85,9 @@ body {
 	float:right;
 }
 
+#line-chart {
+	height:450px;
+}
 /*.text-secondary {
     overflow: auto;
     max-height: 500px;

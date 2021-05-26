@@ -1,4 +1,5 @@
 """Interactive Dashboard dash/plotly"""
+import dash
 from dash.dependencies import Output, Input
 
 import flask
@@ -41,7 +42,7 @@ app = dash.Dash(__name__,
                 external_scripts=external_scripts,
                 external_stylesheets=external_stylesheets)
 
-app.layout = html.Div(className='container main', children=[
+app.layout = dbc.Container(className='main', children=[
                                set_header(), #dashboard header
                                dbc.Row(className='main-row',  # Define the row element
                                        children=[
@@ -68,14 +69,16 @@ def download_csv():
     response.headers["Content-Disposition"] = f"attachment; filename=data.csv"
     response.headers["Content-Type"] = "text/csv"
     return response
-            
+  
+if __name__ == '__main__':
+    app.run_server()          
         
 '''def open_browser():
     webbrowser.open_new('http://127.0.0.1:2000/')'''
 
-def run_app():
+"""def run_app():
     app.run_server()    
-    """Timer(1, open_browser).start();
+    Timer(1, open_browser).start();
     app.logger.setLevel(logging.DEBUG)
     app.jinja_env.auto_reload = True
     app.config['TEMPLATES_AUTO_RELOAD'] = True

@@ -27,7 +27,7 @@ def generate_table(df):
         columns=[
             {"name": i, "id": i, "selectable": True} for i in df.columns
         ],
-        page_size=16,
+        page_size=14,
         style_cell={'padding': '5px',#'textAlign': 'right',
                    'fontSize':12,'whiteSpace': 'normal',
                    'height': 'auto'},
@@ -40,6 +40,14 @@ def generate_table(df):
             'height': 'auto',
             'lineHeight': '14px'
         },
+        style_table={'height': '500px', 'overflowY': 'auto'},
+        style_cell_conditional=[
+            {
+                'if': {'column_id': 'country'},
+                'fontWeight': 'bold',
+                'textAlign': 'left'
+            }
+        ],
         data=df.to_dict('records'),
         sort_action="native",
     )
@@ -49,14 +57,27 @@ def create_map(df):
     Returns plotly map   
     Inputs - dataframe=df
     """
+    #geojson=get_countries_geo(df)
+    #geojson = px.data.gapminder()
+    #print(geojson)
     fig = px.choropleth(df,               
               height=600,
-              geojson=get_countries_geo(df), 
-              locations='country',
-              color=df['value'],
+              locations='country_code',
+              color='value',
               hover_name="country",  
-              animation_frame="year",    
+              animation_frame="year", 
               color_continuous_scale='Viridis'
+    )
+    #fig.update_geos(fitbounds="locations", visible=False)
+    fig.update_layout(
+    title_text='Life Expectancy(1961 to 2018)', title_x=0.5,
+    coloraxis_colorbar=dict(title="Years"),
+    geo=dict(
+            showframe=False,
+            showcoastlines=False,
+            projection_type='equirectangular'
+        ),
+        coloraxis_colorbar_x=-0.15
     )
     
     return fig
@@ -83,7 +104,7 @@ def create_lineChart(df, selected):
             type='linear',
             gridwidth=2,
         ),
-        yaxis=dict(     
+        yaxis=dict(     #template="plotly_dark"
             gridcolor='rgb(243, 243, 243)',
             gridwidth=2,
             ),
